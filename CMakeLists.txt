@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.2)
 
-project(Template)
+project(Snake)
 
 # Directories
 set(SOURCES_DIR      "src")
