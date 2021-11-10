@@ -1,3 +1,0 @@
-/home/matt/C++/snake/build/CMakeFiles/Template.dir
-/home/matt/C++/snake/build/CMakeFiles/edit_cache.dir
-/home/matt/C++/snake/build/CMakeFiles/rebuild_cache.dir
