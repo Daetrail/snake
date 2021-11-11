@@ -46,7 +46,7 @@ void print_help()
     << std::endl <<
     "--------------------------------------------------------------------------------------------------------"
     << std::endl <<
-    "In runnerconfig.txt,"
+    "In '" + CONFIGPATH + "',"
     << std::endl <<
     "1st Line: Executable path"
     << std::endl <<
@@ -63,7 +63,7 @@ void openFile(std::fstream& file, std::string path, bool trunc)
         file.open(path);
         if (!file.is_open())
         {
-            std::cerr << "-- Error: Cannot open file. -- " << std::endl;
+            std::cerr << "--- Error: Cannot open file. Please create a file named: '" << CONFIGPATH << "' in the same directory as this program. ---" << std::endl;
             std::exit(-1);
         }
     }
@@ -72,7 +72,7 @@ void openFile(std::fstream& file, std::string path, bool trunc)
         file.open(path, std::ios::in | std::ios::out | std::ios::trunc);
         if (!file.is_open())
         {
-            std::cerr << "-- Error: Cannot open file. -- " << std::endl;
+            std::cerr << "--- Error: Cannot open file. Please create a file named: '" << CONFIGPATH << "' in the same directory as this program. ---" << std::endl;
             std::exit(-1);
         }   
     }
