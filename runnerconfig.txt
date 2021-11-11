@@ -1,0 +1,3 @@
+hi
+cmake -S . -B build 
+hi

@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <array>
+
+const std::string CONFIGPATH = "runnerconfig.txt";
 
 enum operations
 {
@@ -12,19 +15,19 @@ enum operations
 
     SETEXECUTABLEPATH,
     SETCMAKECOMMAND,
-    SETMAKEPATH
+    SETMAKEDIR
 };
 
 enum pathIndex
 {
     EXECUTABLEPATH,
     CMAKECOMMAND,
-    MAKEPATH
+    MAKEDIR
 };
 
 void print_help()
 {
-    std::cout << std::endl <<
+    std::cout <<
     "-- Subcommands --" << std::endl <<
     "help --> Displays this subcommand list."
     << std::endl <<
@@ -38,23 +41,64 @@ void print_help()
     << std::endl <<
     "setcmakecommand <cmake-command> --> Sets the CMake command for the runcmake subcommand."
     << std::endl <<
-    "setmakepath <path-to-makefile> --> Sets the makefile path for the runmake subcommand."
+    "setmakedir <path-to-makefile-directory> --> Sets the makefile directory for the runmake subcommand."
     << std::endl;
+}
+
+void openFile(std::fstream& file, std::string path, bool trunc)
+{
+    if (!trunc)
+    {
+        file.open(path);
+        if (!file.is_open())
+        {
+            std::cerr << "-- Error: Cannot open file. -- " << std::endl;
+            std::exit(-1);
+        }
+    }
+    else
+    {
+        file.open(path, std::ios::in | std::ios::out | std::ios::trunc);
+        if (!file.is_open())
+        {
+            std::cerr << "-- Error: Cannot open file. -- " << std::endl;
+            std::exit(-1);
+        }   
+    }
+}
+
+void getLines(std::fstream& file, std::array<std::string, 3>& lines)
+{
+    size_t i = 0;
+    while(!file.eof())
+    {
+        std::string temp;
+        std::getline(file, temp);
+        lines[i] = temp;
+        ++i;
+    }
+}
+
+void setContents(std::fstream &file, std::array<std::string, 3> &lines)
+{
+    openFile(file, CONFIGPATH, true);
+    for (auto line : lines)
+    {
+        file << line << std::endl;
+    }
+    file.close();
 }
 
 int main(int argc, char* argv[])
 {
-    int currentOperation;
+    int currentOperation = -1;
 
     std::array<std::string, 3> paths;
 
     std::fstream configFile;
-    configFile.open("runnerconfig.txt");
-    if (!configFile.is_open())
-    {
-        std::cerr << "-- Error: Cannot open file. -- " << std::endl;
-        return EXIT_FAILURE;
-    }
+    openFile(configFile, CONFIGPATH, false);
+    getLines(configFile, paths);
+    configFile.close();
 
     if (argc == 1)
     {
@@ -64,11 +108,18 @@ int main(int argc, char* argv[])
 
     if (currentOperation != HELP)
     {
-        if (argv[1] == "help")
+        if (std::string(argv[1]) == "help")
             currentOperation = HELP;
-        if [argv[1] == "setexecutablepath"]
+        else if (std::string(argv[1]) == "setexecutablepath")
+            currentOperation = SETEXECUTABLEPATH;
+        else if (std::string(argv[1]) == "setcmakecommand")
+            currentOperation = SETCMAKECOMMAND;
+        else if (std::string(argv[1]) == "setmakedir")
+            currentOperation = SETMAKEDIR;
+        else
         {
-            
+            std::cerr << "--- Error: Invalid subcommand. Run 'runner help' for help. ---" << std::endl;
+            return EXIT_FAILURE;
         }
     }
 
@@ -78,7 +129,46 @@ int main(int argc, char* argv[])
             print_help();
             break;
 
+        case SETEXECUTABLEPATH:
+            if (argc != 3)
+            {
+                std::cerr << "--- Error: Invalid arguments to 'setexecutablepath' subcommand. Run 'runner help' for help. ---" << std::endl;
+                return EXIT_FAILURE;
+            }
+            paths[EXECUTABLEPATH] = argv[2];
+            setContents(configFile, paths);
+            break;
 
+        case SETCMAKECOMMAND:
+        {
+            if (argc < 3)
+            {
+                std::cerr << "--- Error: Invalid arguments to 'setcmakecommand' subcommand. Run 'runner help' for help. ---" << std::endl;
+                return EXIT_FAILURE;
+            }
 
+            std::stringstream command;
+
+            for (size_t i = 2; i < argc; ++i)
+            { 
+                command << argv[i] << " ";
+            }
+            paths[CMAKECOMMAND] = command.str();
+            setContents(configFile, paths);
+            
+        }
+            break;
+
+        case SETMAKEDIR:
+            if (argc != 3)
+            {
+                std::cerr << "--- Error: Invalid arguments to 'setmakedir' subcommand. Run 'runner help' for help. ---" << std::endl;
+                return EXIT_FAILURE;
+            }
+            paths[MAKEDIR] = argv[2];
+            setContents(configFile, paths);
+            break;
     }
+
+    return 0;
 }
