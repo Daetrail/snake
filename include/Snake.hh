@@ -26,4 +26,5 @@ private:
     float totalTime = 0.0f;
 
     sf::Vector2f direction;
+    bool isMoving = false;
 };
