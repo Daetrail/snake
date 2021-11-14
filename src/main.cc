@@ -12,7 +12,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(G::WINDOW_WIDTH, G::WINDOW_HEIGHT), "Snake", sf::Style::Close | sf::Style::Titlebar, settings);
 
-    Game game(G::SQUARE_SPACING, 0.1f, sf::Color::Blue, sf::Color::Red, sf::Vector2f(G::WINDOW_WIDTH / 2.f - G::SQUARE_SPACING / 2, G::WINDOW_HEIGHT / 2.f - G::SQUARE_SPACING / 2), G::WINDOW_WIDTH, G::WINDOW_HEIGHT, sf::Color::Cyan);
+    Game game(G::SQUARE_SPACING, 0.1f, sf::Color::Blue, sf::Color::Red, sf::Vector2f(G::WINDOW_WIDTH / 2.f - G::SQUARE_SPACING / 2, G::WINDOW_HEIGHT / 2.f - G::SQUARE_SPACING / 2), G::WINDOW_WIDTH, G::WINDOW_HEIGHT, sf::Color::Cyan, false);
 
     sf::Clock clock;
     float deltaTime;

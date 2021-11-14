@@ -10,7 +10,7 @@
 class Game
 {
 public:
-    Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Color& fruitColour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour);
+    Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Color& fruitColour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour = sf::Color::White, const bool& grids = true);
 
     void eventLoop(sf::Event& event);
 
@@ -21,6 +21,8 @@ public:
 private:
     Snake snake;
     Fruit fruit;
+
+    bool grids = true;
 
     unsigned int cellSpacing;
 
