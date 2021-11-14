@@ -22,6 +22,8 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            game.eventLoop(event);
         }
 
         game.update(deltaTime);

@@ -14,6 +14,12 @@ public:
     
     void determineDirection();
 
+    void addBlob();
+    void moveBody();
+    void manuallyAddBlob(sf::Event& event);
+
+    void detectBodyCollision();
+
     void update(float& deltaTime);
     void draw(sf::RenderWindow& window);
 
@@ -24,6 +30,8 @@ private:
 
     float switchTime;
     float totalTime = 0.0f;
+
+    sf::Color colour;
 
     sf::Vector2f direction = {0.f, 0.f};
 };
