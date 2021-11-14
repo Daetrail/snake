@@ -12,19 +12,18 @@ class Snake
 public:
     Snake(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Vector2f& initialPosition);
     
-    void update(float& deltaTime);
+    void determineDirection();
 
+    void update(float& deltaTime);
     void draw(sf::RenderWindow& window);
 
 private:
     std::vector<sf::RectangleShape> snakeBlobs;
-    std::vector<sf::Vector2f> snakePos;
 
     unsigned int cellSpacing;
 
     float switchTime;
     float totalTime = 0.0f;
 
-    sf::Vector2f direction;
-    bool isMoving = false;
+    sf::Vector2f direction = {0.f, 0.f};
 };

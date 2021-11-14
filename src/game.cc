@@ -29,6 +29,11 @@ Game::Game(const unsigned int& cellSpacing, const float& switchTime, const sf::C
     this->horizontalLines[this->horizontalLines.size() - 1].move(0.f, -1.f);
 }
 
+void Game::update(float& deltaTime)
+{
+    this->snake.update(deltaTime);
+}
+
 void Game::draw(sf::RenderWindow& window)
 {
     for (auto h : this->horizontalLines)
