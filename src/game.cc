@@ -2,9 +2,10 @@
 
 #include "Game.hh"
 #include "Snake.hh"
+#include "Fruit.hh"
 
-Game::Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour)
-: snake(cellSpacing, switchTime, colour, initialPosition), cellSpacing(cellSpacing), gridColour(gridColour)
+Game::Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Color& fruitColour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour)
+: snake(cellSpacing, switchTime, colour, initialPosition), fruit(fruitColour, this->snake), cellSpacing(cellSpacing), gridColour(gridColour)
 {
     for (unsigned int x = 0; x <= WINDOW_WIDTH; x += this->cellSpacing)
     {
@@ -37,6 +38,7 @@ void Game::eventLoop(sf::Event& event)
 void Game::update(float& deltaTime)
 {
     this->snake.update(deltaTime);
+    this->fruit.update();
 }
 
 void Game::draw(sf::RenderWindow& window)
@@ -48,4 +50,5 @@ void Game::draw(sf::RenderWindow& window)
         window.draw(v);
 
     snake.draw(window);
+    fruit.draw(window);
 }

@@ -5,11 +5,12 @@
 #include "SFML/Graphics.hpp"
 
 #include "Snake.hh"
+#include "Fruit.hh"
 
 class Game
 {
 public:
-    Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour);
+    Game(const unsigned int& cellSpacing, const float& switchTime, const sf::Color& colour, const sf::Color& fruitColour, const sf::Vector2f& initialPosition, const unsigned int& WINDOW_WIDTH, const unsigned int& WINDOW_HEIGHT, const sf::Color& gridColour);
 
     void eventLoop(sf::Event& event);
 
@@ -19,6 +20,7 @@ public:
 
 private:
     Snake snake;
+    Fruit fruit;
 
     unsigned int cellSpacing;
 

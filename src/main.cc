@@ -3,12 +3,16 @@
 #include "Global.hh"
 #include "Snake.hh"
 #include "Game.hh"
+#include "Fruit.hh"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(G::WINDOW_WIDTH, G::WINDOW_HEIGHT), "Snake", sf::Style::Close | sf::Style::Titlebar);
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 16;
 
-    Game game(G::SQUARE_SPACING, 0.1f, sf::Color::Blue, sf::Vector2f(G::WINDOW_WIDTH / 2.f - G::SQUARE_SPACING / 2, G::WINDOW_HEIGHT / 2.f - G::SQUARE_SPACING / 2), G::WINDOW_WIDTH, G::WINDOW_HEIGHT, sf::Color::Cyan);
+    sf::RenderWindow window(sf::VideoMode(G::WINDOW_WIDTH, G::WINDOW_HEIGHT), "Snake", sf::Style::Close | sf::Style::Titlebar, settings);
+
+    Game game(G::SQUARE_SPACING, 0.1f, sf::Color::Blue, sf::Color::Red, sf::Vector2f(G::WINDOW_WIDTH / 2.f - G::SQUARE_SPACING / 2, G::WINDOW_HEIGHT / 2.f - G::SQUARE_SPACING / 2), G::WINDOW_WIDTH, G::WINDOW_HEIGHT, sf::Color::Cyan);
 
     sf::Clock clock;
     float deltaTime;
